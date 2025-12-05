@@ -1,36 +1,161 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎯 Visualiseur de Théorie des Graphes
 
-## Getting Started
+Une application interactive de visualisation d'algorithmes de graphes construite avec Next.js et Cytoscape.js, utilisant un design neobrutalist audacieux.
 
-First, run the development server:
+## 📋 Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Cette application permet de créer des graphes orientés pondérés de manière interactive et de visualiser pas-à-pas l'exécution d'algorithmes classiques de théorie des graphes. L'interface utilise un style neobrutalist avec des bordures épaisses, des ombres dures et des couleurs vives pour une expérience utilisateur unique.
+
+## ✨ Fonctionnalités
+
+### Construction de Graphes
+- **Ajout de nœuds** : Création de nœuds avec nommage automatique (A, B, C...)
+- **Création d'arêtes** : Système drag-and-drop intuitif pour connecter les nœuds
+- **Poids personnalisés** : Dialog modal pour définir le poids de chaque arête
+- **Manipulation visuelle** : Déplacement des nœuds par glisser-déposer
+- **Suppression** : Retrait de nœuds ou d'arêtes sélectionnés
+
+### Algorithmes Implémentés
+- **BFS** (Breadth-First Search) - Parcours en largeur
+- **DFS** (Depth-First Search) - Parcours en profondeur
+- **Dijkstra** - Plus court chemin pondéré
+- **A*** - Recherche heuristique optimale
+
+### Visualisation
+- **Lecture pas-à-pas** : Navigation dans l'exécution de l'algorithme
+- **Contrôle de vitesse** : Ajustement du délai entre les étapes (100-2000ms)
+- **États visuels** : Couleurs différentes pour visiting, visited, path, etc.
+- **Feedback temps réel** : Messages descriptifs pour chaque étape
+
+## 🛠️ Stack Technique
+
+- **Framework** : Next.js 16.0.7 (App Router)
+- **Langage** : TypeScript
+- **Visualisation** : Cytoscape.js + react-cytoscapejs
+- **Interaction** : cytoscape-edgehandles (drag-and-drop d'arêtes)
+- **State Management** : Zustand
+- **UI Components** : shadcn/ui (Radix UI)
+- **Styling** : Tailwind CSS (Neobrutalism)
+
+## 📁 Architecture du Code
+
+```
+/app
+  page.tsx              # Page principale avec layout
+  globals.css           # Styles globaux
+
+/components
+  graph-canvas.tsx      # Canvas Cytoscape avec gestion des interactions
+  toolbar.tsx           # Contrôles du graphe et algorithmes
+  feedback-panel.tsx    # Panneau d'affichage des messages
+  algorithm-player.tsx  # Gestion de la lecture automatique
+  edge-weight-dialog.tsx # Dialog pour saisir le poids d'une arête
+  /ui                   # Composants shadcn/ui
+
+/lib
+  types.ts              # Types TypeScript (GraphNode, GraphEdge, AlgorithmStep)
+  store.ts              # Store Zustand avec état global
+  algorithms.ts         # Implémentations BFS, DFS, Dijkstra, A*
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Principes Architecturaux
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Séparation des responsabilités**
+   - Logique d'algorithmes isolée dans `/lib/algorithms.ts`
+   - État global géré par Zustand
+   - Components React purement visuels
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Pattern Step-by-Step**
+   - Les algorithmes génèrent un tableau d'`AlgorithmStep[]`
+   - Chaque step contient : type, id, state, message
+   - La lecture parcourt séquentiellement les steps
 
-## Learn More
+3. **Configuration Cytoscape**
+   - `curve-style: 'bezier'` pour supporter les multi-arêtes
+   - Stylesheet CSS-like pour les styles visuels
+   - Event handlers pour tap, drag, edgehandles
 
-To learn more about Next.js, take a look at the following resources:
+4. **Gestion des Arêtes**
+   - Edgehandles pour le drag-and-drop natif
+   - Protection contre les événements multiples (flag `isProcessingEdgeRef`)
+   - Dialog modal pour la saisie du poids
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Installation et Utilisation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Installation des dépendances
+pnpm install
 
-## Deploy on Vercel
+# Lancement en développement
+pnpm dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Build de production
+pnpm build
+pnpm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ouvrir [http://localhost:3000](http://localhost:3000) dans le navigateur.
+
+### Guide Rapide
+
+1. **Créer un graphe**
+   - Cliquer sur "Ajouter Nœud" pour créer des nœuds
+   - Activer "Connecter", puis glisser d'un nœud à un autre
+   - Entrer le poids de l'arête dans le dialog
+
+2. **Exécuter un algorithme**
+   - Sélectionner un nœud, cliquer "Définir Début"
+   - (Optionnel) Définir un nœud de fin
+   - Choisir un algorithme dans la liste
+   - Cliquer "Exécuter l'Algorithme"
+
+3. **Visualiser**
+   - Cliquer "Lecture" pour déroulement automatique
+   - Ajuster le curseur de vitesse
+   - Observer les changements de couleur et messages
+
+## 🔮 Évolutions Futures
+
+### Court Terme
+- **Import/Export** : Sauvegarde et chargement de graphes (JSON)
+- **Graphes non-orientés** : Support des arêtes bidirectionnelles
+- **Zoom/Pan** : Amélioration de la navigation dans les grands graphes
+- **Historique** : Undo/Redo pour les modifications
+
+### Moyen Terme
+- **Nouveaux Algorithmes**
+  - Bellman-Ford (arêtes négatives)
+  - Floyd-Warshall (tous les plus courts chemins)
+  - Kruskal/Prim (arbres couvrants minimaux)
+  - Détection de cycles
+- **Graphes Pondérés** : Visualisation des poids sur les nœuds
+- **Mode Comparaison** : Exécution parallèle de plusieurs algorithmes
+
+### Long Terme
+- **Éditeur de Graphes Avancé**
+  - Templates de graphes classiques (complet, biparti, arbre...)
+  - Génération aléatoire paramétrable
+  - Grille d'alignement pour positionnement précis
+- **Analyse de Graphes**
+  - Calcul de métriques (degré, centralité, clustering...)
+  - Détection de composantes connexes
+  - Visualisation de la matrice d'adjacence
+- **Export Visuel**
+  - Capture d'écran/GIF animé de l'exécution
+  - Export en image vectorielle (SVG)
+- **Mode Pédagogique**
+  - Explications détaillées pour chaque étape
+  - Quizz interactifs sur les algorithmes
+  - Comparaison de complexités temporelles
+
+## 📄 Licence
+
+MIT
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
+
+---
+
+**Développé avec ❤️ et Claude Code**
