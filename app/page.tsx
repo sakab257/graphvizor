@@ -34,7 +34,7 @@ export default function Home() {
                 Visualiseur de Théorie des Graphes
               </h1>
               <p className="mt-2 text-sm font-mono transition-all duration-200">
-                Outil interactif de visualisation d&apos;algorithmes de graphes
+                Outil interactif de visualisation d&apos;algorithmes de graphes | Salim BOUSKINE | © Tous droits réservés.
               </p>
             </div>
           </div>
