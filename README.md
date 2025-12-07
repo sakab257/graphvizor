@@ -117,7 +117,7 @@ Ouvrir [http://localhost:3000](http://localhost:3000) dans le navigateur.
 ## 🔮 Évolutions Futures
 
 ### Court Terme
-- **Import/Export** : Sauvegarde et chargement de graphes (JSON)
+- **Import/Export** : Sauvegarde et chargement de graphes (JSON/Image)
 - **Graphes non-orientés** : Support des arêtes bidirectionnelles
 - **Zoom/Pan** : Amélioration de la navigation dans les grands graphes
 - **Historique** : Undo/Redo pour les modifications
@@ -148,14 +148,6 @@ Ouvrir [http://localhost:3000](http://localhost:3000) dans le navigateur.
   - Quizz interactifs sur les algorithmes
   - Comparaison de complexités temporelles
 
-## 📄 Licence
-
-MIT
-
 ## 🤝 Contribution
 
 Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
-
----
-
-**Développé avec ❤️ et Claude Code**

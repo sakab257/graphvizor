@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import Image from 'next/image';
 
 export default function Home() {
   const [isInstructionsOpen, setIsInstructionsOpen] = useState(false);
@@ -26,13 +27,16 @@ export default function Home() {
       <div className="max-w-[1800px] mx-auto space-y-4 h-full transition-all duration-300">
         {/* Header */}
         <div className="border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 flex justify-between bg-white items-center transition-all duration-300">
-          <div className="transition-all duration-300">
-            <h1 className="text-4xl font-black uppercase tracking-tight transition-all duration-200">
-              Visualiseur de Théorie des Graphes
-            </h1>
-            <p className="mt-2 text-sm font-mono transition-all duration-200">
-              Outil interactif de visualisation d&apos;algorithmes de graphes
-            </p>
+          <div className="transition-all flex gap-6">
+            <Image src="/logo.png" alt='logo' height={75} width={75} className='hover:animate-spin hover:scale-125 transition-all'/>
+            <div>
+              <h1 className="text-4xl font-black uppercase tracking-tight transition-all duration-200">
+                Visualiseur de Théorie des Graphes
+              </h1>
+              <p className="mt-2 text-sm font-mono transition-all duration-200">
+                Outil interactif de visualisation d&apos;algorithmes de graphes
+              </p>
+            </div>
           </div>
 
           <Dialog open={isInstructionsOpen} onOpenChange={setIsInstructionsOpen}>
